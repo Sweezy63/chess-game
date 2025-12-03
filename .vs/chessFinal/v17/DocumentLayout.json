@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\chessFinal (cs final)\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0F96FAB3-8E73-410C-B502-4759AA4A1C2A}|chessFinal\\chessFinal.vcxproj|C:\\chessFinal (cs final)\\chessFinal\\chessGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{0F96FAB3-8E73-410C-B502-4759AA4A1C2A}|chessFinal\\chessFinal.vcxproj|solutionrelative:chessFinal\\chessGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "chessGame.cpp",
+              "DocumentMoniker": "C:\\chessFinal (cs final)\\chessFinal\\chessGame.cpp",
+              "RelativeDocumentMoniker": "chessFinal\\chessGame.cpp",
+              "ToolTip": "C:\\chessFinal (cs final)\\chessFinal\\chessGame.cpp",
+              "RelativeToolTip": "chessFinal\\chessGame.cpp",
+              "ViewState": "AgIAAIgCAAAAAAAAAAAAAN4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-02T07:39:54.237Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
