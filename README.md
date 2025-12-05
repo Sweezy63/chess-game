@@ -5,7 +5,8 @@ This project demonstrates object-oriented programming, operator overloading, and
 
 ---
 
-[![Watch the video](https://img.youtube.com/vi/whrer8g0-wI/maxresdefault.jpg)](https://youtu.be/VIDEO_ID)
+## 🎥 Project Walkthrough
+[▶️ Watch the demo video on YouTube](https://youtu.be/whrer8g0-wI)
 
 ---
 
