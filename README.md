@@ -5,6 +5,10 @@ This project demonstrates object-oriented programming, operator overloading, and
 
 ---
 
+[![Watch the video](https://img.youtube.com/vi/whrer8g0-wI/maxresdefault.jpg)](https://youtu.be/VIDEO_ID)
+
+---
+
 ## 🎮 Features
 - Full move validation for all pieces
 - Modular code structure for clarity and extensibility
