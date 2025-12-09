@@ -8,6 +8,7 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
+#include <limits>   // <-- added
 using namespace std;
 
 // ======================= Piece Base Class =======================
@@ -59,7 +60,7 @@ public:
         int r = sr + dr, c = sc + dc;
         while (r != er || c != ec) {
             if (board[r][c] != nullptr) return false;
-            r += dr;c += dc;
+            r += dr; c += dc;
         }
         return board[er][ec] == nullptr || board[er][ec]->getColor() != isWhite;
     }
@@ -88,7 +89,7 @@ public:
         int r = sr + dr, c = sc + dc;
         while (r != er && c != ec) {
             if (board[r][c] != nullptr) return false;
-            r += dr;c += dc;
+            r += dr; c += dc;
         }
         return board[er][ec] == nullptr || board[er][ec]->getColor() != isWhite;
     }
@@ -106,7 +107,7 @@ public:
             int r = sr + dr, c = sc + dc;
             while (r != er || c != ec) {
                 if (board[r][c] != nullptr) return false;
-                r += dr;c += dc;
+                r += dr; c += dc;
             }
             return board[er][ec] == nullptr || board[er][ec]->getColor() != isWhite;
         }
@@ -116,7 +117,7 @@ public:
             int r = sr + dr, c = sc + dc;
             while (r != er && c != ec) {
                 if (board[r][c] != nullptr) return false;
-                r += dr;c += dc;
+                r += dr; c += dc;
             }
             return board[er][ec] == nullptr || board[er][ec]->getColor() != isWhite;
         }
@@ -139,7 +140,7 @@ public:
             Piece* rook = board[sr][rookCol];
             if (rook != nullptr && dynamic_cast<Rook*>(rook) != nullptr && !rook->getHasMoved()) {
                 int step = (ec > sc) ? 1 : -1;
-                for (int c = sc + step;c != rookCol;c += step) {
+                for (int c = sc + step; c != rookCol; c += step) {
                     if (board[sr][c] != nullptr) return false;
                 }
                 return true;
@@ -163,35 +164,35 @@ private:
 
 public:
     Board() {
-        for (int r = 0;r < 8;r++)for (int c = 0;c < 8;c++)squares[r][c] = nullptr;
+        for (int r = 0; r < 8; r++)for (int c = 0; c < 8; c++)squares[r][c] = nullptr;
         lastMoveStart = { -1,-1 };
         lastMoveEnd = { -1,-1 };
     }
     ~Board() {
-        for (int r = 0;r < 8;r++)for (int c = 0;c < 8;c++)delete squares[r][c];
+        for (int r = 0; r < 8; r++)for (int c = 0; c < 8; c++)delete squares[r][c];
     }
     void setupBoard() {
-        for (int c = 0;c < 8;c++) {
+        for (int c = 0; c < 8; c++) {
             squares[6][c] = new Pawn(true);
             squares[1][c] = new Pawn(false);
         }
-        squares[7][0] = new Rook(true);squares[7][7] = new Rook(true);
-        squares[0][0] = new Rook(false);squares[0][7] = new Rook(false);
-        squares[7][1] = new Knight(true);squares[7][6] = new Knight(true);
-        squares[0][1] = new Knight(false);squares[0][6] = new Knight(false);
-        squares[7][2] = new Bishop(true);squares[7][5] = new Bishop(true);
-        squares[0][2] = new Bishop(false);squares[0][5] = new Bishop(false);
-        squares[7][3] = new Queen(true);squares[0][3] = new Queen(false);
-        squares[7][4] = new King(true);squares[0][4] = new King(false);
+        squares[7][0] = new Rook(true); squares[7][7] = new Rook(true);
+        squares[0][0] = new Rook(false); squares[0][7] = new Rook(false);
+        squares[7][1] = new Knight(true); squares[7][6] = new Knight(true);
+        squares[0][1] = new Knight(false); squares[0][6] = new Knight(false);
+        squares[7][2] = new Bishop(true); squares[7][5] = new Bishop(true);
+        squares[0][2] = new Bishop(false); squares[0][5] = new Bishop(false);
+        squares[7][3] = new Queen(true); squares[0][3] = new Queen(false);
+        squares[7][4] = new King(true); squares[0][4] = new King(false);
     }
 
     void display() {
         cout << "\n";
         cout << "      a   b   c   d   e   f   g   h\n";
         cout << "    +---+---+---+---+---+---+---+---+\n";
-        for (int r = 0;r < 8;r++) {
+        for (int r = 0; r < 8; r++) {
             cout << "  " << (8 - r) << " |";
-            for (int c = 0;c < 8;c++) {
+            for (int c = 0; c < 8; c++) {
                 if (squares[r][c] == nullptr) cout << "   |";
                 else cout << " " << glyph(squares[r][c]->getSymbol()) << " |";
             }
@@ -204,8 +205,8 @@ public:
     Piece* getPiece(int r, int c) { return squares[r][c]; }
 
     pair<int, int> findKing(bool white) {
-        for (int r = 0;r < 8;r++) {
-            for (int c = 0;c < 8;c++) {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
                 if (squares[r][c] != nullptr && dynamic_cast<King*>(squares[r][c]) != nullptr) {
                     if (squares[r][c]->getColor() == white) return { r,c };
                 }
@@ -215,8 +216,8 @@ public:
     }
 
     bool isSquareAttacked(int row, int col, bool byWhite) {
-        for (int r = 0;r < 8;r++) {
-            for (int c = 0;c < 8;c++) {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
                 Piece* p = squares[r][c];
                 if (p != nullptr && p->getColor() == byWhite) {
                     if (p->isValidMove(r, c, row, col, squares)) return true;
@@ -232,12 +233,12 @@ public:
     }
 
     bool hasLegalMoves(bool white) {
-        for (int sr = 0;sr < 8;sr++) {
-            for (int sc = 0;sc < 8;sc++) {
+        for (int sr = 0; sr < 8; sr++) {
+            for (int sc = 0; sc < 8; sc++) {
                 Piece* p = squares[sr][sc];
                 if (p != nullptr && p->getColor() == white) {
-                    for (int er = 0;er < 8;er++) {
-                        for (int ec = 0;ec < 8;ec++) {
+                    for (int er = 0; er < 8; er++) {
+                        for (int ec = 0; ec < 8; ec++) {
                             if (tryMove(sr, sc, er, ec, white)) return true;
                         }
                     }
@@ -414,8 +415,8 @@ public:
     void saveGame(const string& filename, const vector<string>& history) {
         ofstream out(filename);
         if (!out) { cout << "Error saving file!\n"; return; }
-        for (int r = 0;r < 8;r++) {
-            for (int c = 0;c < 8;c++) {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
                 if (squares[r][c] == nullptr) out << ".";
                 else out << squares[r][c]->getSymbol();
             }
@@ -432,13 +433,13 @@ public:
         ifstream in(filename);
         if (!in) { cout << "Error loading file!\n"; return; }
         // Clear existing
-        for (int r = 0;r < 8;r++)for (int c = 0;c < 8;c++) { delete squares[r][c]; squares[r][c] = nullptr; }
+        for (int r = 0; r < 8; r++)for (int c = 0; c < 8; c++) { delete squares[r][c]; squares[r][c] = nullptr; }
 
         // Read board
-        for (int r = 0;r < 8;r++) {
+        for (int r = 0; r < 8; r++) {
             string line; getline(in, line);
             if (line.size() < 8) { cout << "Invalid file format.\n"; return; }
-            for (int c = 0;c < 8;c++) {
+            for (int c = 0; c < 8; c++) {
                 char ch = line[c];
                 if (ch == '.') continue;
                 bool white = isupper(ch);
@@ -477,29 +478,173 @@ public:
     }
 };
 
-// ======================= AI (Random Legal Move) =======================
+// ======================= Evaluation =======================
+
+int pieceBaseValue(char s) {
+    switch (toupper(s)) {
+    case 'P': return 100;
+    case 'N': return 320;
+    case 'B': return 330;
+    case 'R': return 500;
+    case 'Q': return 900;
+    case 'K': return 20000;
+    default: return 0;
+    }
+}
+
+// Evaluate board from the perspective of sideToMove (true = white, false = black)
+int evaluateBoard(Board& board, bool sideToMove) {
+    int score = 0;
+
+    for (int r = 0; r < 8; ++r) {
+        for (int c = 0; c < 8; ++c) {
+            Piece* p = board.getPiece(r, c);
+            if (!p) continue;
+
+            int val = pieceBaseValue(p->getSymbol());
+            if (p->getColor()) score += val;   // white piece
+            else score -= val;                 // black piece
+        }
+    }
+
+    // Score from sideToMove POV
+    return sideToMove ? score : -score;
+}
+
+// ======================= Search (Minimax w alpha-beta) =======================
+
+// Move struct MUST be defined before we use it in vectors
 struct Move { int sr, sc, er, ec; };
 
-Move getRandomAIMove(Board& board, bool aiWhite) {
-    vector<Move> moves;
-    for (int sr = 0;sr < 8;sr++) {
-        for (int sc = 0;sc < 8;sc++) {
+void generateLegalMoves(Board& board, bool sideToMove, vector<Move>& moves) {
+    moves.clear();
+    for (int sr = 0; sr < 8; ++sr) {
+        for (int sc = 0; sc < 8; ++sc) {
             Piece* p = board.getPiece(sr, sc);
-            if (p != nullptr && p->getColor() == aiWhite) {
-                for (int er = 0;er < 8;er++) {
-                    for (int ec = 0;ec < 8;ec++) {
-                        if (board.tryMove(sr, sc, er, ec, aiWhite)) {
-                            moves.push_back({ sr,sc,er,ec });
-                        }
+            if (!p || p->getColor() != sideToMove) continue;
+            for (int er = 0; er < 8; ++er) {
+                for (int ec = 0; ec < 8; ++ec) {
+                    if (board.tryMove(sr, sc, er, ec, sideToMove)) {
+                        moves.push_back({ sr, sc, er, ec });
                     }
                 }
             }
         }
     }
-    if (moves.empty()) return { -1,-1,-1,-1 };
-    size_t idx = rand() % moves.size();
-    return moves[idx];
 }
+
+int search(Board& board, int depth, int alpha, int beta, bool sideToMove) {
+    if (depth == 0) {
+        return evaluateBoard(board, sideToMove);
+    }
+
+    vector<Move> moves;
+    generateLegalMoves(board, sideToMove, moves);
+
+    if (moves.empty()) {
+        // No legal moves: either checkmate or stalemate
+        if (board.isInCheck(sideToMove)) {
+            // losing position
+            return -1000000;
+        }
+        else {
+            // stalemate
+            return 0;
+        }
+    }
+
+    int best = -10000000;
+
+    for (const Move& m : moves) {
+        // Simulate move (simple stub — search currently unused)
+        Piece* captured = board.getPiece(m.er, m.ec);
+        Piece* moving = board.getPiece(m.sr, m.sc);
+
+        // You could implement full make/undo here if you decide to use search().
+        (void)captured;
+        (void)moving;
+    }
+
+    return best;
+}
+
+// ======================= AI (Greedy Parametric) =======================
+
+int pieceParamValue(Piece* p) {
+    if (!p) return 0;
+    char s = p->getSymbol();
+    switch (toupper(s)) {
+    case 'P': return 100;
+    case 'N': return 320;
+    case 'B': return 330;
+    case 'R': return 500;
+    case 'Q': return 900;
+    case 'K': return 20000;
+    default:  return 0;
+    }
+}
+
+// Centralization bonus param: you can adjust these weights too
+int centerBonus(int r, int c) {
+    int dr = abs(r - 3);
+    int dc = abs(c - 3);
+    return 8 - (dr + dc); // closer to (3,3) gets higher
+}
+
+Move getParamAIMove(Board& board, bool aiWhite) {
+    vector<Move> moves;
+    vector<int> scores;
+
+    for (int sr = 0; sr < 8; sr++) {
+        for (int sc = 0; sc < 8; sc++) {
+            Piece* p = board.getPiece(sr, sc);
+            if (p == nullptr || p->getColor() != aiWhite) continue;
+
+            for (int er = 0; er < 8; er++) {
+                for (int ec = 0; ec < 8; ec++) {
+                    if (!board.tryMove(sr, sc, er, ec, aiWhite)) continue;
+
+                    Move m{ sr, sc, er, ec };
+                    moves.push_back(m);
+
+                    int score = 0;
+
+                    // Capture value
+                    Piece* target = board.getPiece(er, ec);
+                    if (target != nullptr && target->getColor() != aiWhite) {
+                        score += pieceParamValue(target);
+                    }
+
+                    // Centralization bonus for destination
+                    score += centerBonus(er, ec);
+
+                    scores.push_back(score);
+                }
+            }
+        }
+    }
+
+    if (moves.empty()) {
+        return { -1, -1, -1, -1 };
+    }
+
+    // Find best score
+    int bestScore = scores[0];
+    for (size_t i = 1; i < scores.size(); ++i) {
+        if (scores[i] > bestScore) bestScore = scores[i];
+    }
+
+    // All moves that share best score
+    vector<int> bestIndices;
+    for (size_t i = 0; i < scores.size(); ++i) {
+        if (scores[i] == bestScore)
+            bestIndices.push_back((int)i);
+    }
+
+    int pick = bestIndices[rand() % bestIndices.size()];
+    return moves[pick];
+}
+
 
 // ======================= Game =======================
 class Game {
@@ -564,8 +709,8 @@ public:
         }
         cout << "Possible moves for " << pos << ": ";
         bool any = false;
-        for (int er = 0;er < 8;er++) {
-            for (int ec = 0;ec < 8;ec++) {
+        for (int er = 0; er < 8; er++) {
+            for (int ec = 0; ec < 8; ec++) {
                 if (board.tryMove(sr, sc, er, ec, whiteTurn)) {
                     cout << char('a' + ec) << 8 - er << " ";
                     any = true;
@@ -599,7 +744,7 @@ public:
 
             // AI turn
             if (aiEnabled && whiteTurn == aiIsWhite) {
-                Move m = getRandomAIMove(board, aiIsWhite);
+                Move m = getParamAIMove(board, aiIsWhite);
                 if (m.sr == -1) {
                     cout << "AI has no legal moves.\n";
                     break;
@@ -645,7 +790,7 @@ public:
             int er = 8 - (move[3] - '0');
             int ec = move[2] - 'a';
             if (sr < 0 || sr>7 || sc < 0 || sc>7 || er < 0 || er>7 || ec < 0 || ec>7) {
-                cout << "Out of bounds!\n";continue;
+                cout << "Out of bounds!\n"; continue;
             }
             if (board.movePiece(sr, sc, er, ec, whiteTurn)) {
                 history.push_back(move);
@@ -661,7 +806,7 @@ public:
 
         // Print move history at end
         cout << "\nGame Over. Move history:\n";
-        for (size_t i = 0;i < history.size();i++) {
+        for (size_t i = 0; i < history.size(); i++) {
             cout << i + 1 << ". " << history[i] << "\n";
         }
     }
